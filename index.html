@@ -597,12 +597,9 @@
      PNG with a transparent background gives the best cut-out result.
   ----------------------------------------------------------------*/
   var LOOKBOOK = [
-    { url: 'https://cdn.shopify.com/s/files/1/0748/3886/8187/files/AG_Washed.png?v=1784530815',
-      name: 'ÁG | Alfredo Shirt' },
-    { url: 'https://cdn.shopify.com/s/files/1/0748/3886/8187/files/HG_Washed.png?v=1784531628',
-      name: 'ÁG | Guerrero Shirt' },
-    { url: 'https://cdn.shopify.com/s/files/1/0748/3886/8187/files/NS_Washed.png?v=1784531724',
-      name: 'ÁG | Noble Saint Shirt' },
+    { url: 'AG_Washed-removebg-preview.png', name: 'ÁG | Alfredo Shirt' },
+    { url: 'HG_Washed-removebg-preview.png', name: 'ÁG | Guerrero Shirt' },
+    { url: 'NS_Washed-removebg-preview.png', name: 'ÁG | Noble Saint Shirt' },
     { url: '', name: 'ÁG | 2026 Collection' }
   ];
 
@@ -745,7 +742,7 @@
     g.add(mount);
     var pic = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
       new THREE.MeshStandardMaterial({
-        roughness: 0.62, transparent: true, alphaTest: 0.02,
+        roughness: 0.62, transparent: true, alphaTest: 0.06,
         emissive: 0xFFFFFF, emissiveIntensity: 0.22 }));
     pic.position.z = 0.062;
     g.add(pic);
@@ -813,33 +810,6 @@
     return g;
   }
 
-  function cap(parent, x, y, z, tone, name) {
-    var g = new THREE.Group();
-    g.position.set(x, y, z);
-    var crown = new THREE.Mesh(new THREE.SphereGeometry(0.23, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2), mat(tone, 0.72));
-    crown.scale.set(1, 0.78, 1.05); crown.castShadow = true; g.add(crown);
-    var brim = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.035, 20, 1, false, 0, Math.PI), mat(tone, 0.72));
-    brim.position.set(0, 0.012, 0.15); brim.rotation.y = Math.PI; g.add(brim);
-    var btn = new THREE.Mesh(new THREE.SphereGeometry(0.028, 8, 6), mat(tone, 0.6));
-    btn.position.y = 0.18; g.add(btn);
-    parent.add(g);
-    var wp = new THREE.Vector3();
-    g.getWorldPosition(wp);
-    registerProduct(g, name, 0.85, 0.75, 0.85, wp);
-    return g;
-  }
-
-  var n1 = niche(-3.4), n2 = niche(0), n3 = niche(3.4);
-  cap(n1, -0.45, 1.73, 0.3, 0x15120C, 'ÁG | Guadalajara');
-  cap(n1, 0.45, 1.73, 0.3, 0xC8B694, 'ÁG | Culiacán');
-  cap(n1, 0, 2.58, 0.3, 0x3A3630, 'ÁG | Durango');
-  cap(n2, -0.45, 1.73, 0.3, 0xC8B694, 'ÁG | Los Ángeles');
-  cap(n2, 0.45, 1.73, 0.3, 0x15120C, 'ÁG | Zapopan');
-  cap(n2, 0, 2.58, 0.3, 0x7A6A52, 'ÁG | Tapatío');
-  cap(n3, -0.45, 1.73, 0.3, 0x3A3630, 'ÁG | Jalisco');
-  cap(n3, 0.45, 1.73, 0.3, 0xC8B694, 'ÁG | Chapala');
-  cap(n3, 0, 2.58, 0.3, 0x15120C, 'ÁG | Tequila');
-
   /* ---- photo standees: real product images, cut-out style ---- */
   function standee(x, z, slot, w, h) {
     var g = new THREE.Group();
@@ -850,7 +820,7 @@
     footE.position.y = FLOOR_Y + 0.035; g.add(footE);
     var pic = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
       new THREE.MeshStandardMaterial({
-        roughness: 0.65, transparent: true, alphaTest: 0.04, side: THREE.DoubleSide,
+        roughness: 0.65, transparent: true, alphaTest: 0.22, side: THREE.DoubleSide,
         emissive: 0xFFFFFF, emissiveIntensity: 0.26 }));
     pic.position.y = FLOOR_Y + 1.15 + h / 2;
     g.add(pic);
@@ -864,9 +834,15 @@
     wp.y = FLOOR_Y + 1.15 + h / 2;
     registerProduct(g, slotName(slot), w + 0.3, h + 0.3, 0.6, wp);
   }
+  niche(-3.4); niche(0); niche(3.4);
+
   standee(-3.4, INNER_Z0 - 11.6, 0, 1.7, 2.1);
   standee(0, INNER_Z0 - 11.6, 1, 1.7, 2.1);
   standee(3.4, INNER_Z0 - 11.6, 2, 1.7, 2.1);
+
+  /* window displays, facing the street */
+  standee((WIN_L0 + WIN_L1) / 2, INNER_Z0 - 1.15, 0, 1.45, 1.85);
+  standee((WIN_R0 + WIN_R1) / 2, INNER_Z0 - 1.15, 1, 1.45, 1.85);
 
   /* ---- central display table ---- */
   var table = new THREE.Group();
@@ -878,42 +854,6 @@
     var leg = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.08, 0.9, 12), brassMat);
     leg.position.set(p[0], FLOOR_Y + 0.45, p[1]); leg.castShadow = true; table.add(leg);
   });
-  cap(table, -1.05, FLOOR_Y + 1.1, 0, 0x15120C, 'ÁG | Guadalajara Negra');
-  cap(table, 0, FLOOR_Y + 1.1, 0, 0xC8B694, 'ÁG | Culiacán Blanca');
-  cap(table, 1.05, FLOOR_Y + 1.1, 0, 0x5A1F22, 'ÁG | Edición Borgoña');
-
-  /* ---- garment rails ---- */
-  function railGroup(side, z0) {
-    var rail = new THREE.Group();
-    rail.position.set(side * (IN_W / 2 - 0.95), 0, z0);
-    salon.add(rail);
-    var bar = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 3.8, 12), brassMat);
-    bar.rotation.x = Math.PI / 2; bar.position.set(0, 3.2, 0);
-    rail.add(bar);
-    [-1.9, 1.9].forEach(function (pz) {
-      var post = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.07, 2.7, 12), brassMat);
-      post.position.set(0, FLOOR_Y + 1.35, pz); rail.add(post);
-    });
-    var tones = [0x2B2B2E, 0xD9CDB6, 0x1C1C1F, 0x8A7C63, 0x5A1F22, 0xCFC3AA, 0x23232A, 0x3B3B42];
-    tones.forEach(function (tone, i) {
-      var z = -1.65 + i * 0.47;
-      var g = new THREE.Group();
-      g.position.set(-side * 0.12, 0, z);
-      var hook = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.012, 6, 12, Math.PI), brassMat);
-      hook.position.set(0, 3.22, 0); hook.rotation.y = Math.PI / 2; g.add(hook);
-      g.add(box(0.1, 0.06, 0.52, mat(0x2A2119, 0.8), 0, 3.1, 0));
-      var body = box(0.22, 1.4, 0.58, mat(tone, 0.86), 0, 2.38, 0);
-      body.castShadow = true; g.add(body);
-      g.add(box(0.2, 0.55, 0.52, mat(tone, 0.86), 0, 1.48, 0));
-      rail.add(g);
-      var wp = new THREE.Vector3();
-      g.getWorldPosition(wp);
-      wp.y = 2.3;
-      registerProduct(g, slotName(i % 3), 0.7, 2.0, 0.55, wp);
-    });
-  }
-  railGroup(-1, INNER_Z0 - 5.6);
-  railGroup(1, INNER_Z0 - 5.6);
 
   /* ---- counter, mirror, bench, rug ---- */
   var counter = new THREE.Group();
@@ -1005,22 +945,6 @@
   var warmRoom = new THREE.PointLight(0xFFC078, 1.5, 22, 2);
   warmRoom.position.set(0, 3.6, INNER_Z0 - 8);
   salon.add(warmRoom);
-
-  /* ---- window displays ---- */
-  function windowBust(x) {
-    var b = new THREE.Group();
-    b.position.set(x, FLOOR_Y, INNER_Z0 - 1.2);
-    var stand = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.3, 0.78, 16), mat(0x241C13, 0.9));
-    stand.position.y = 0.39; stand.castShadow = true; b.add(stand);
-    var torso = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.2, 0.7, 16), mat(0xE0D0B4, 0.7));
-    torso.position.y = 1.13; torso.castShadow = true; b.add(torso);
-    var head = new THREE.Mesh(new THREE.SphereGeometry(0.2, 20, 16), mat(0xE0D0B4, 0.7));
-    head.position.y = 1.63; b.add(head);
-    salon.add(b);
-    cap(b, 0, 1.74, 0, 0x15120C, 'ÁG | Guadalajara');
-  }
-  windowBust((WIN_L0 + WIN_L1) / 2);
-  windowBust((WIN_R0 + WIN_R1) / 2);
 
   var halo = new THREE.Mesh(
     new THREE.RingGeometry(2.4, 2.95, 56, 1, Math.PI, Math.PI),
