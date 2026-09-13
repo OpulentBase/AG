@@ -382,32 +382,32 @@
   })();
 
   /* ---------------- plinth + street ---------------- */
-  var plinth = new THREE.Mesh(new THREE.CylinderGeometry(15, 15.5, 1.0, 80), mat(0x140F09, 0.96));
+  var plinth = new THREE.Mesh(new THREE.CylinderGeometry(20, 20.6, 1.0, 80), mat(0x140F09, 0.96));
   plinth.position.y = -0.5; plinth.receiveShadow = true; world.add(plinth);
-  var road = new THREE.Mesh(new THREE.CircleGeometry(15, 80), mat(0x1C150E, 0.98));
+  var road = new THREE.Mesh(new THREE.CircleGeometry(20, 80), mat(0x1C150E, 0.98));
   road.rotation.x = -Math.PI / 2; road.position.y = 0.002; road.receiveShadow = true; world.add(road);
-  world.add(box(34, 0.24, 3.6, mat(0x6B5738, 0.95), 0, 0.12, 3.2));
-  world.add(box(34, 0.14, 0.34, mat(0x4A3B25, 0.94), 0, 0.19, 5.0));
+  world.add(box(44, 0.24, 3.8, mat(0x6B5738, 0.95), 0, 0.12, 3.3));
+  world.add(box(44, 0.14, 0.34, mat(0x4A3B25, 0.94), 0, 0.19, 5.2));
 
   /* ---------------- boutique shell ---------------- */
   var shop = new THREE.Group();
   world.add(shop);
 
-  var BW = 8.6, BH = 7.2, BD = 11.0;
+  var BW = 11.0, BH = 7.6, BD = 17.0;
   var FZ = 2.70, WALL_T = 0.35, BACK_Z = FZ - BD;
-  var IN_W = BW - 2 * WALL_T, FLOOR_Y = 0.5, CEIL_Y = 6.3;
+  var IN_W = BW - 2 * WALL_T, FLOOR_Y = 0.5, CEIL_Y = 6.6;
   var MIDZ = FZ - BD / 2;
 
-  var SIDE_D = BD + 0.4, SIDE_Z = (FZ - WALL_T - 0.03) - SIDE_D / 2;
+  var SIDE_D = BD + 0.5, SIDE_Z = (FZ - WALL_T - 0.04) - SIDE_D / 2;
   shop.add(box(WALL_T, BH, SIDE_D, mat(STONE_D, 0.93), -(BW / 2 - WALL_T / 2), BH / 2, SIDE_Z));
   shop.add(box(WALL_T, BH, SIDE_D, mat(STONE_D, 0.93), BW / 2 - WALL_T / 2, BH / 2, SIDE_Z));
   shop.add(box(BW, BH, WALL_T, mat(STONE_D, 0.93), 0, BH / 2, BACK_Z + WALL_T / 2));
-  shop.add(box(BW, 0.3, SIDE_D - 0.5, mat(0x1D1610, 0.9), 0, BH - 0.2, SIDE_Z + 0.12));
+  shop.add(box(BW, 0.3, SIDE_D - 0.7, mat(0x1D1610, 0.9), 0, BH - 0.2, SIDE_Z + 0.16));
 
-  var WIN_Y0 = 0.95, WIN_Y1 = 3.95;
-  var DOOR_W = 2.3, DOOR_BASE = 0.45, DOOR_STRAIGHT = 2.45;
+  var WIN_Y0 = 0.95, WIN_Y1 = 4.35;
+  var DOOR_W = 2.8, DOOR_BASE = 0.45, DOOR_STRAIGHT = 2.80;
   var DOOR_R = DOOR_W / 2, DOOR_TOP = DOOR_BASE + DOOR_STRAIGHT + DOOR_R;
-  var WIN_L0 = -3.62, WIN_L1 = -1.72, WIN_R0 = 1.72, WIN_R1 = 3.62;
+  var WIN_L0 = -4.62, WIN_L1 = -2.25, WIN_R0 = 2.25, WIN_R1 = 4.62;
 
   function rectHole(x0, y0, x1, y1) {
     var p = new THREE.Path();
@@ -438,15 +438,14 @@
 
   /* bands and cornices — depths staggered so no two faces share a plane */
   shop.add(box(BW + 0.35, 0.55, BD + 0.35, mat(STONE_D, 0.92), 0, 0.27, MIDZ));
-  shop.add(box(BW + 0.18, 0.34, BD + 0.18, mat(STONE_L, 0.9), 0, 4.55, MIDZ));
-  shop.add(box(BW + 0.62, 0.5, BD + 0.62, mat(STONE_L, 0.88), 0, 7.0, MIDZ));
-  shop.add(box(BW + 0.30, 0.26, BD + 0.30, mat(STONE_D, 0.9), 0, 6.68, MIDZ));
+  shop.add(box(BW + 0.18, 0.34, BD + 0.18, mat(STONE_L, 0.9), 0, 4.95, MIDZ));
+  shop.add(box(BW + 0.62, 0.5, BD + 0.62, mat(STONE_L, 0.88), 0, 7.42, MIDZ));
 
   /* quoins sunk into the wall so their backs are never coplanar with it */
   [-(BW / 2 - 0.26), BW / 2 - 0.26].forEach(function (x) {
-    for (var k = 0; k < 5; k++) {
-      var wq = k % 2 === 0 ? 0.52 : 0.38;
-      shop.add(box(wq, 0.8, 0.32, mat(k % 2 === 0 ? STONE_L : STONE, 0.9), x, 0.95 + k * 0.85, FZ + 0.06));
+    for (var k = 0; k < 6; k++) {
+      var wq = k % 2 === 0 ? 0.58 : 0.42;
+      shop.add(box(wq, 0.86, 0.32, mat(k % 2 === 0 ? STONE_L : STONE, 0.9), x, 0.98 + k * 0.92, FZ + 0.06));
     }
   });
 
@@ -506,12 +505,12 @@
 
   shop.add(box(0.07, DOOR_STRAIGHT + DOOR_R - 0.15, 0.07, lacquer,
     0, DOOR_BASE + (DOOR_STRAIGHT + DOOR_R - 0.15) / 2, FZ - WALL_T / 2 + 0.09));
-  [-0.14, 0.14].forEach(function (hx) {
-    shop.add(box(0.05, 0.62, 0.05, brassMat, hx, 1.55, FZ + 0.21));
+  [-0.16, 0.16].forEach(function (hx) {
+    shop.add(box(0.055, 0.7, 0.055, brassMat, hx, 1.6, FZ + 0.21));
   });
 
   var stepPad = new THREE.Mesh(
-    new THREE.CylinderGeometry(1.5, 1.62, 0.14, 32, 1, false, 0, Math.PI), mat(0x5A4830, 0.94));
+    new THREE.CylinderGeometry(1.9, 2.05, 0.14, 32, 1, false, 0, Math.PI), mat(0x5A4830, 0.94));
   stepPad.position.set(0, 0.14, FZ + 0.16);
   stepPad.rotation.y = Math.PI; stepPad.receiveShadow = true;
   shop.add(stepPad);
@@ -532,15 +531,15 @@
     var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
     var p = new THREE.Mesh(new THREE.PlaneGeometry(0.82, 0.31),
       new THREE.MeshStandardMaterial({ map: t, emissive: 0xFFFFFF, emissiveMap: t, emissiveIntensity: 0.5, roughness: 0.6 }));
-    p.position.set(x, 1.85, FZ + 0.19);
+    p.position.set(x, 1.95, FZ + 0.19);
     shop.add(p);
   }
-  plaque(-1.62); plaque(1.62);
+  plaque(-1.98); plaque(1.98);
 
-  shop.add(box(BW + 0.62, 0.12, 0.5, iron, 0, 7.34, FZ + 0.26));
-  shop.add(box(BW + 0.62, 0.09, 0.5, iron, 0, 8.09, FZ + 0.26));
-  for (var bi = 0; bi <= 26; bi++)
-    shop.add(box(0.06, 0.78, 0.06, iron, -(BW + 0.5) / 2 + bi * ((BW + 0.5) / 26), 7.72, FZ + 0.26));
+  shop.add(box(BW + 0.62, 0.12, 0.5, iron, 0, 7.76, FZ + 0.26));
+  shop.add(box(BW + 0.62, 0.09, 0.5, iron, 0, 8.51, FZ + 0.26));
+  for (var bi = 0; bi <= 32; bi++)
+    shop.add(box(0.06, 0.78, 0.06, iron, -(BW + 0.5) / 2 + bi * ((BW + 0.5) / 32), 8.14, FZ + 0.26));
 
   /* ---------------- signage: lifted clear of the cornice ---------------- */
   function tracked(ctx, text, cxp, cy, sp) {
@@ -568,89 +567,246 @@
   signTex.encoding = THREE.sRGBEncoding;
   signTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-  shop.add(box(7.9, 1.98, 0.26, lacquer, 0, 5.86, FZ + 0.06));
-  var sign = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 1.72),
+  shop.add(box(9.6, 1.86, 0.26, lacquer, 0, 6.10, FZ + 0.06));
+  var sign = new THREE.Mesh(new THREE.PlaneGeometry(9.2, 1.62),
     new THREE.MeshStandardMaterial({
       map: signTex, emissive: 0xFFFFFF, emissiveMap: signTex,
       emissiveIntensity: 0.85, roughness: 0.7 }));
-  sign.position.set(0, 5.86, FZ + 0.23);
+  sign.position.set(0, 6.10, FZ + 0.23);
   shop.add(sign);
 
-  [-2.6, 2.6].forEach(function (lx) {
-    shop.add(box(0.06, 0.06, 0.7, iron, lx, 7.0, FZ + 0.42));
+  [-3.2, 3.2].forEach(function (lx) {
+    shop.add(box(0.06, 0.06, 0.7, iron, lx, 7.22, FZ + 0.42));
     var shade = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.22, 0.22, 14, 1, true),
       new THREE.MeshStandardMaterial({ color: 0x0E0B07, roughness: 0.5, side: THREE.DoubleSide }));
-    shade.position.set(lx, 6.93, FZ + 0.72);
+    shade.position.set(lx, 7.15, FZ + 0.72);
     shop.add(shade);
   });
   var signLight = new THREE.SpotLight(0xFFE7BC, 3.2, 13, 0.6, 0.5, 2);
-  signLight.position.set(0, 7.25, FZ + 1.6);
-  signLight.target.position.set(0, 5.8, FZ);
+  signLight.position.set(0, 7.5, FZ + 1.7);
+  signLight.target.position.set(0, 6.05, FZ);
   world.add(signLight); world.add(signLight.target);
 
   /* ================= THE SALON ================= */
+
+  /* ---------------------------------------------------------------
+     REAL PRODUCT PHOTOGRAPHY
+     Paste image URLs below and they appear in the room immediately.
+     Anything works: your Shopify CDN, your repo, any https URL.
+     Leave a slot empty and a labelled placeholder renders instead.
+     PNG with a transparent background gives the best cut-out result.
+  ----------------------------------------------------------------*/
+  var LOOKBOOK = [
+    { url: 'https://cdn.shopify.com/s/files/1/0748/3886/8187/files/AG_Washed.png?v=1784530815',
+      name: 'ÁG | Alfredo Shirt' },
+    { url: 'https://cdn.shopify.com/s/files/1/0748/3886/8187/files/HG_Washed.png?v=1784531628',
+      name: 'ÁG | Guerrero Shirt' },
+    { url: 'https://cdn.shopify.com/s/files/1/0748/3886/8187/files/NS_Washed.png?v=1784531724',
+      name: 'ÁG | Noble Saint Shirt' },
+    { url: '', name: 'ÁG | 2026 Collection' }
+  ];
+
+  var texLoader = new THREE.TextureLoader();
+  texLoader.setCrossOrigin('anonymous');
+
+  function placeholderTex(label, w, h) {
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var g = c.getContext('2d');
+    g.fillStyle = '#241B12'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = 'rgba(201,162,39,0.5)'; g.lineWidth = 6;
+    g.strokeRect(14, 14, w - 28, h - 28);
+    g.textAlign = 'center';
+    g.fillStyle = '#C9A227';
+    g.font = '500 ' + Math.round(h * 0.13) + 'px "Cormorant Garamond", Georgia, serif';
+    g.fillText('ÁG', w / 2, h * 0.42);
+    g.fillStyle = 'rgba(240,226,196,0.5)';
+    g.font = '500 ' + Math.round(h * 0.045) + 'px system-ui, sans-serif';
+    g.fillText(label, w / 2, h * 0.56);
+    g.fillStyle = 'rgba(240,226,196,0.28)';
+    g.font = '500 ' + Math.round(h * 0.034) + 'px system-ui, sans-serif';
+    g.fillText('IMAGE SLOT', w / 2, h * 0.64);
+    var t = new THREE.CanvasTexture(c);
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  }
+
+  function slotName(slot) {
+    var e = LOOKBOOK[slot];
+    return e && e.name ? e.name : 'Piece';
+  }
+
+  /* Loads the image, then rescales the plane to the picture's own aspect
+     ratio so nothing is ever stretched, whatever you paste in. */
+  function loadFitted(slot, mesh, maxW, maxH) {
+    var e = LOOKBOOK[slot] || { url: '', name: 'Piece' };
+    function usePlaceholder() {
+      var t = placeholderTex(e.name, 512, 640);
+      mesh.material.map = t;
+      mesh.material.emissiveMap = t;
+      mesh.material.needsUpdate = true;
+      var ar = 512 / 640, w = maxW, h = maxW / ar;
+      if (h > maxH) { h = maxH; w = maxH * ar; }
+      mesh.scale.set(w, h, 1);
+    }
+    if (!e.url) { usePlaceholder(); return; }
+    usePlaceholder();
+    texLoader.load(e.url, function (t) {
+      t.encoding = THREE.sRGBEncoding;
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      mesh.material.map = t;
+      mesh.material.emissiveMap = t;
+      mesh.material.needsUpdate = true;
+      var iw = t.image && t.image.width ? t.image.width : 512;
+      var ih = t.image && t.image.height ? t.image.height : 640;
+      var ar = iw / ih, w = maxW, h = maxW / ar;
+      if (h > maxH) { h = maxH; w = maxH * ar; }
+      mesh.scale.set(w, h, 1);
+    }, undefined, usePlaceholder);
+  }
+
   var salon = new THREE.Group();
   shop.add(salon);
   var products = [];
 
+  var INNER_Z0 = FZ - WALL_T;
+  var INNER_Z1 = BACK_Z + WALL_T;
+  var ROOM_D = INNER_Z0 - INNER_Z1;
+  var ROOM_MZ = (INNER_Z0 + INNER_Z1) / 2;
+
   var floorMat = new THREE.MeshStandardMaterial({ map: parquet, roughness: 0.55, metalness: 0.03 });
-  var floor = new THREE.Mesh(new THREE.PlaneGeometry(IN_W, BD - WALL_T), floorMat);
+  parquet.repeat.set(4, 7);
+  var floor = new THREE.Mesh(new THREE.PlaneGeometry(IN_W, ROOM_D), floorMat);
   floor.rotation.x = -Math.PI / 2;
-  floor.position.set(0, FLOOR_Y, MIDZ);
+  floor.position.set(0, FLOOR_Y, ROOM_MZ);
   floor.receiveShadow = true;
   salon.add(floor);
 
   var marbleMat = new THREE.MeshStandardMaterial({ map: marble, roughness: 0.25, metalness: 0.06 });
 
-  /* boiserie: ivory panels with gilt moulding */
+  function registerProduct(mesh, name, w, h, d, pos) {
+    var hot = new THREE.Mesh(new THREE.BoxGeometry(w, h, d),
+      new THREE.MeshBasicMaterial({ visible: false }));
+    hot.position.copy(pos);
+    hot.userData.name = name;
+    hot.userData.mesh = mesh;
+    world.add(hot);
+    products.push(hot);
+  }
+
+  /* boiserie */
   function boiserie(side) {
     var x = side * (IN_W / 2 - 0.02);
-    var wall = new THREE.Mesh(new THREE.PlaneGeometry(BD - WALL_T, CEIL_Y - FLOOR_Y), mat(IVORY, 0.9));
+    var wall = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_D, CEIL_Y - FLOOR_Y), mat(IVORY, 0.9));
     wall.rotation.y = -side * Math.PI / 2;
-    wall.position.set(x, (FLOOR_Y + CEIL_Y) / 2, MIDZ);
+    wall.position.set(x, (FLOOR_Y + CEIL_Y) / 2, ROOM_MZ);
     wall.receiveShadow = true;
     salon.add(wall);
-    salon.add(box(0.06, 0.34, 10.45, mat(0xE6D8BC, 0.85), x - side * 0.04, FLOOR_Y + 0.17, MIDZ));
-    salon.add(box(0.05, 0.12, 10.45, brassMat, x - side * 0.05, 3.55, MIDZ));
-    salon.add(box(0.06, 0.26, 10.45, mat(0xE6D8BC, 0.85), x - side * 0.04, CEIL_Y - 0.16, MIDZ));
-    for (var p = 0; p < 4; p++) {
-      var pz = FZ - 1.6 - p * 2.2;
-      [[1.0, 2.35], [0.86, 1.15]].forEach(function (d, di) {
-        var fr = new THREE.Shape();
-        fr.moveTo(-d[0], -d[1] / 2); fr.lineTo(d[0], -d[1] / 2);
-        fr.lineTo(d[0], d[1] / 2); fr.lineTo(-d[0], d[1] / 2); fr.lineTo(-d[0], -d[1] / 2);
-        fr.holes.push(rectHole(-d[0] + 0.09, -d[1] / 2 + 0.09, d[0] - 0.09, d[1] / 2 - 0.09));
-        var m = new THREE.Mesh(new THREE.ExtrudeGeometry(fr, { depth: 0.05, bevelEnabled: false }),
-          mat(di === 0 ? 0xD9C79F : BRASS, 0.5, di === 0 ? 0.05 : 0.8));
-        m.rotation.y = -side * Math.PI / 2;
-        m.position.set(x - side * 0.07, di === 0 ? 2.35 : 4.6, pz);
-        salon.add(m);
-      });
+    salon.add(box(0.06, 0.36, ROOM_D - 0.3, mat(0xE6D8BC, 0.85), x - side * 0.04, FLOOR_Y + 0.18, ROOM_MZ));
+    salon.add(box(0.05, 0.12, ROOM_D - 0.3, brassMat, x - side * 0.05, 3.75, ROOM_MZ));
+    salon.add(box(0.06, 0.28, ROOM_D - 0.3, mat(0xE6D8BC, 0.85), x - side * 0.04, CEIL_Y - 0.2, ROOM_MZ));
+    for (var p = 0; p < 6; p++) {
+      var pz = INNER_Z0 - 1.8 - p * 2.5;
+      if (pz < INNER_Z1 + 1.0) break;
+      var fr = new THREE.Shape();
+      fr.moveTo(-1.05, -1.3); fr.lineTo(1.05, -1.3);
+      fr.lineTo(1.05, 1.3); fr.lineTo(-1.05, 1.3); fr.lineTo(-1.05, -1.3);
+      fr.holes.push(rectHole(-0.96, -1.21, 0.96, 1.21));
+      var m = new THREE.Mesh(new THREE.ExtrudeGeometry(fr, { depth: 0.05, bevelEnabled: false }),
+        mat(0xD9C79F, 0.5, 0.05));
+      m.rotation.y = -side * Math.PI / 2;
+      m.position.set(x - side * 0.07, 2.5, pz);
+      salon.add(m);
     }
   }
   boiserie(-1); boiserie(1);
 
-  /* back wall: lit arched niches holding the caps */
-  var backFace = BACK_Z + WALL_T + 0.02;
+  var backFace = INNER_Z1 + 0.02;
   salon.add(new THREE.Mesh(new THREE.PlaneGeometry(IN_W, CEIL_Y - FLOOR_Y), mat(IVORY, 0.9))
     .translateY((FLOOR_Y + CEIL_Y) / 2).translateZ(backFace));
 
+  /* ---- framed photography on the side walls ---- */
+  function framedPhoto(side, z, slot, w, h) {
+    var x = side * (IN_W / 2 - 0.1);
+    var g = new THREE.Group();
+    g.position.set(x, 3.35, z);
+    g.rotation.y = -side * Math.PI / 2;
+    var fr = new THREE.Shape();
+    fr.moveTo(-w / 2 - 0.16, -h / 2 - 0.16); fr.lineTo(w / 2 + 0.16, -h / 2 - 0.16);
+    fr.lineTo(w / 2 + 0.16, h / 2 + 0.16); fr.lineTo(-w / 2 - 0.16, h / 2 + 0.16);
+    fr.lineTo(-w / 2 - 0.16, -h / 2 - 0.16);
+    fr.holes.push(rectHole(-w / 2, -h / 2, w / 2, h / 2));
+    var frame = new THREE.Mesh(new THREE.ExtrudeGeometry(fr, { depth: 0.13, bevelEnabled: false }),
+      mat(0xC9A75E, 0.42, 0.62));
+    frame.position.z = -0.02;
+    g.add(frame);
+    var mount = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat(0xF2E8D4, 0.9));
+    mount.position.z = 0.045;
+    g.add(mount);
+    var pic = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
+      new THREE.MeshStandardMaterial({
+        roughness: 0.62, transparent: true, alphaTest: 0.02,
+        emissive: 0xFFFFFF, emissiveIntensity: 0.22 }));
+    pic.position.z = 0.062;
+    g.add(pic);
+    loadFitted(slot, pic, w - 0.34, h - 0.34);
+    var pl = new THREE.PointLight(GLOW, 0.7, 4, 2);
+    pl.position.set(0, h / 2 + 0.5, 0.7);
+    g.add(pl);
+    salon.add(g);
+    var wp = new THREE.Vector3();
+    g.getWorldPosition(wp);
+    registerProduct(g, slotName(slot), 0.7, h + 0.4, w + 0.4, wp);
+  }
+  framedPhoto(-1, INNER_Z0 - 3.0, 0, 1.8, 2.2);
+  framedPhoto(-1, INNER_Z0 - 8.0, 1, 1.8, 2.2);
+  framedPhoto(1, INNER_Z0 - 3.0, 2, 1.8, 2.2);
+  framedPhoto(1, INNER_Z0 - 8.0, 3, 1.8, 2.2);
+
+  /* ---- campaign panel on the back wall ---- */
+  (function campaign() {
+    var g = new THREE.Group();
+    g.position.set(0, 4.35, backFace + 0.04);
+    var w = 4.4, h = 2.3;
+    var fr = new THREE.Shape();
+    fr.moveTo(-w / 2 - 0.18, -h / 2 - 0.18); fr.lineTo(w / 2 + 0.18, -h / 2 - 0.18);
+    fr.lineTo(w / 2 + 0.18, h / 2 + 0.18); fr.lineTo(-w / 2 - 0.18, h / 2 + 0.18);
+    fr.lineTo(-w / 2 - 0.18, -h / 2 - 0.18);
+    fr.holes.push(rectHole(-w / 2, -h / 2, w / 2, h / 2));
+    g.add(new THREE.Mesh(new THREE.ExtrudeGeometry(fr, { depth: 0.12, bevelEnabled: false }),
+      mat(0xC9A75E, 0.42, 0.62)));
+    var mount = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat(0xF2E8D4, 0.9));
+    mount.position.z = 0.05;
+    g.add(mount);
+    var pic = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
+      new THREE.MeshStandardMaterial({
+        roughness: 0.6, transparent: true, alphaTest: 0.02,
+        emissive: 0xFFFFFF, emissiveIntensity: 0.3 }));
+    pic.position.z = 0.072;
+    g.add(pic);
+    loadFitted(3, pic, w - 0.4, h - 0.3);
+    var l = new THREE.PointLight(GLOW, 1.3, 7, 2);
+    l.position.set(0, 1.7, 1.2);
+    g.add(l);
+    salon.add(g);
+  })();
+
+  /* ---- arched niches with caps ---- */
   function niche(x) {
     var g = new THREE.Group();
     g.position.set(x, 0, backFace + 0.02);
     var inner = new THREE.Mesh(
-      new THREE.ShapeGeometry(archPath(THREE.Shape, 1.7, 1.1, 1.9), 24), lit(0x8A5A22, 0.55));
+      new THREE.ShapeGeometry(archPath(THREE.Shape, 1.8, 1.0, 1.95), 24), lit(0x8A5A22, 0.6));
     inner.position.z = 0.01;
     g.add(inner);
-    var fr = archPath(THREE.Shape, 1.98, 0.96, 2.04);
-    fr.holes.push(archPath(THREE.Path, 1.7, 1.1, 1.9));
-    var frame = new THREE.Mesh(new THREE.ExtrudeGeometry(fr, { depth: 0.12, bevelEnabled: false, curveSegments: 24 }),
-      mat(0xD9C79F, 0.55, 0.1));
-    g.add(frame);
-    [1.55, 2.35].forEach(function (sy) {
-      g.add(box(1.6, 0.07, 0.42, mat(0xD9C79F, 0.6), 0, sy, 0.22));
+    var fr = archPath(THREE.Shape, 2.1, 0.86, 2.09);
+    fr.holes.push(archPath(THREE.Path, 1.8, 1.0, 1.95));
+    g.add(new THREE.Mesh(new THREE.ExtrudeGeometry(fr, { depth: 0.12, bevelEnabled: false, curveSegments: 24 }),
+      mat(0xD9C79F, 0.55, 0.1)));
+    [1.5, 2.35].forEach(function (sy) {
+      g.add(box(1.7, 0.07, 0.44, mat(0xD9C79F, 0.6), 0, sy, 0.23));
     });
-    var l = new THREE.PointLight(GLOW, 1.6, 5, 2);
+    var l = new THREE.PointLight(GLOW, 1.7, 5, 2);
     l.position.set(0, 2.6, 0.5);
     g.add(l);
     salon.add(g);
@@ -661,215 +817,229 @@
     var g = new THREE.Group();
     g.position.set(x, y, z);
     var crown = new THREE.Mesh(new THREE.SphereGeometry(0.23, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2), mat(tone, 0.72));
-    crown.scale.set(1, 0.78, 1.05);
-    crown.castShadow = true;
-    g.add(crown);
+    crown.scale.set(1, 0.78, 1.05); crown.castShadow = true; g.add(crown);
     var brim = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.035, 20, 1, false, 0, Math.PI), mat(tone, 0.72));
-    brim.position.set(0, 0.012, 0.15); brim.rotation.y = Math.PI;
-    g.add(brim);
+    brim.position.set(0, 0.012, 0.15); brim.rotation.y = Math.PI; g.add(brim);
     var btn = new THREE.Mesh(new THREE.SphereGeometry(0.028, 8, 6), mat(tone, 0.6));
     btn.position.y = 0.18; g.add(btn);
     parent.add(g);
-    var hot = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.72, 0.82),
-      new THREE.MeshBasicMaterial({ visible: false }));
-    hot.position.copy(g.getWorldPosition(new THREE.Vector3()));
-    hot.userData.name = name;
-    hot.userData.mesh = g;
-    world.add(hot);
-    products.push(hot);
+    var wp = new THREE.Vector3();
+    g.getWorldPosition(wp);
+    registerProduct(g, name, 0.85, 0.75, 0.85, wp);
     return g;
   }
 
-  var n1 = niche(-2.5), n2 = niche(0), n3 = niche(2.5);
-  cap(n1, -0.42, 1.78, 0.28, 0x15120C, 'ÁG | Guadalajara');
-  cap(n1, 0.42, 1.78, 0.28, 0xC8B694, 'ÁG | Culiacán');
-  cap(n1, 0, 2.58, 0.28, 0x3A3630, 'ÁG | Durango');
-  cap(n2, -0.42, 1.78, 0.28, 0xC8B694, 'ÁG | Los Ángeles');
-  cap(n2, 0.42, 1.78, 0.28, 0x15120C, 'ÁG | Zapopan');
-  cap(n2, 0, 2.58, 0.28, 0x7A6A52, 'ÁG | Tapatío');
-  cap(n3, -0.42, 1.78, 0.28, 0x3A3630, 'ÁG | Jalisco');
-  cap(n3, 0.42, 1.78, 0.28, 0xC8B694, 'ÁG | Chapala');
-  cap(n3, 0, 2.58, 0.28, 0x15120C, 'ÁG | Tequila');
+  var n1 = niche(-3.4), n2 = niche(0), n3 = niche(3.4);
+  cap(n1, -0.45, 1.73, 0.3, 0x15120C, 'ÁG | Guadalajara');
+  cap(n1, 0.45, 1.73, 0.3, 0xC8B694, 'ÁG | Culiacán');
+  cap(n1, 0, 2.58, 0.3, 0x3A3630, 'ÁG | Durango');
+  cap(n2, -0.45, 1.73, 0.3, 0xC8B694, 'ÁG | Los Ángeles');
+  cap(n2, 0.45, 1.73, 0.3, 0x15120C, 'ÁG | Zapopan');
+  cap(n2, 0, 2.58, 0.3, 0x7A6A52, 'ÁG | Tapatío');
+  cap(n3, -0.45, 1.73, 0.3, 0x3A3630, 'ÁG | Jalisco');
+  cap(n3, 0.45, 1.73, 0.3, 0xC8B694, 'ÁG | Chapala');
+  cap(n3, 0, 2.58, 0.3, 0x15120C, 'ÁG | Tequila');
 
-  /* central display table, marble on brass */
-  var table = new THREE.Group();
-  table.position.set(0, 0, FZ - 4.2);
-  salon.add(table);
-  table.add(box(2.9, 0.12, 1.5, marbleMat, 0, 1.42, 0));
-  table.add(box(2.7, 0.08, 1.32, mat(0xD9C79F, 0.5, 0.3), 0, 1.32, 0));
-  [[-1.25, -0.58], [1.25, -0.58], [-1.25, 0.58], [1.25, 0.58]].forEach(function (p) {
-    var leg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.86, 12), brassMat);
-    leg.position.set(p[0], 0.93, p[1]); leg.castShadow = true; table.add(leg);
-  });
-  table.add(box(2.5, 0.05, 1.1, mat(0xD9C79F, 0.5, 0.3), 0, 0.62, 0));
-  cap(table, -0.85, 1.62, 0, 0x15120C, 'ÁG | Guadalajara Negra');
-  cap(table, 0, 1.62, 0, 0xC8B694, 'ÁG | Culiacán Blanca');
-  cap(table, 0.85, 1.62, 0, 0x5A1F22, 'ÁG | Edición Borgoña');
-
-  /* garment rail on the left */
-  var rail = new THREE.Group();
-  rail.position.set(-IN_W / 2 + 0.75, 0, FZ - 3.4);
-  salon.add(rail);
-  var bar = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 3.4, 12), brassMat);
-  bar.rotation.x = Math.PI / 2; bar.position.set(0, 3.0, 0);
-  rail.add(bar);
-  [[0, 3.0, -1.7], [0, 3.0, 1.7]].forEach(function (p) {
-    var post = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.06, 2.5, 12), brassMat);
-    post.position.set(p[0], 1.75, p[2]); rail.add(post);
-  });
-  var shirtTones = [0x2B2B2E, 0xD9CDB6, 0x1C1C1F, 0x8A7C63, 0x5A1F22, 0xCFC3AA, 0x23232A];
-  shirtTones.forEach(function (tone, i) {
-    var z = -1.45 + i * 0.48;
+  /* ---- photo standees: real product images, cut-out style ---- */
+  function standee(x, z, slot, w, h) {
     var g = new THREE.Group();
-    g.position.set(0.12, 0, z);
-    var hook = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.012, 6, 12, Math.PI), brassMat);
-    hook.position.set(-0.12, 3.02, 0); hook.rotation.y = Math.PI / 2;
-    g.add(hook);
-    var shoulder = box(0.1, 0.06, 0.5, mat(0x2A2119, 0.8), -0.12, 2.9, 0);
-    g.add(shoulder);
-    var body = box(0.22, 1.35, 0.56, mat(tone, 0.86), -0.02, 2.2, 0);
-    body.castShadow = true;
-    g.add(body);
-    var lower = box(0.2, 0.5, 0.5, mat(tone, 0.86), -0.02, 1.35, 0);
-    g.add(lower);
-    rail.add(g);
-    var hot = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.9, 0.55),
-      new THREE.MeshBasicMaterial({ visible: false }));
-    hot.position.set(rail.position.x + 0.02, 2.1, rail.position.z + z);
-    hot.position.add(new THREE.Vector3(0, 0, 0));
-    hot.userData.name = 'ÁG | Alfredo Shirt';
-    hot.userData.mesh = g;
-    world.add(hot);
-    products.push(hot);
+    g.position.set(x, 0, z);
+    var easel = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.09, 1.15, 12), brassMat);
+    easel.position.y = FLOOR_Y + 0.58; g.add(easel);
+    var footE = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.4, 0.07, 18), marbleMat);
+    footE.position.y = FLOOR_Y + 0.035; g.add(footE);
+    var pic = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
+      new THREE.MeshStandardMaterial({
+        roughness: 0.65, transparent: true, alphaTest: 0.04, side: THREE.DoubleSide,
+        emissive: 0xFFFFFF, emissiveIntensity: 0.26 }));
+    pic.position.y = FLOOR_Y + 1.15 + h / 2;
+    g.add(pic);
+    loadFitted(slot, pic, w, h);
+    var glowUp = new THREE.PointLight(GLOW, 0.7, 4, 2);
+    glowUp.position.set(0, FLOOR_Y + 0.9, 0.7);
+    g.add(glowUp);
+    salon.add(g);
+    var wp = new THREE.Vector3();
+    g.getWorldPosition(wp);
+    wp.y = FLOOR_Y + 1.15 + h / 2;
+    registerProduct(g, slotName(slot), w + 0.3, h + 0.3, 0.6, wp);
+  }
+  standee(-3.4, INNER_Z0 - 11.6, 0, 1.7, 2.1);
+  standee(0, INNER_Z0 - 11.6, 1, 1.7, 2.1);
+  standee(3.4, INNER_Z0 - 11.6, 2, 1.7, 2.1);
+
+  /* ---- central display table ---- */
+  var table = new THREE.Group();
+  table.position.set(0, 0, INNER_Z0 - 5.2);
+  salon.add(table);
+  table.add(box(3.6, 0.13, 1.8, marbleMat, 0, FLOOR_Y + 1.02, 0));
+  table.add(box(3.4, 0.08, 1.62, mat(0xD9C79F, 0.5, 0.3), 0, FLOOR_Y + 0.9, 0));
+  [[-1.55, -0.7], [1.55, -0.7], [-1.55, 0.7], [1.55, 0.7]].forEach(function (p) {
+    var leg = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.08, 0.9, 12), brassMat);
+    leg.position.set(p[0], FLOOR_Y + 0.45, p[1]); leg.castShadow = true; table.add(leg);
   });
+  cap(table, -1.05, FLOOR_Y + 1.1, 0, 0x15120C, 'ÁG | Guadalajara Negra');
+  cap(table, 0, FLOOR_Y + 1.1, 0, 0xC8B694, 'ÁG | Culiacán Blanca');
+  cap(table, 1.05, FLOOR_Y + 1.1, 0, 0x5A1F22, 'ÁG | Edición Borgoña');
 
-  /* counter on the right */
+  /* ---- garment rails ---- */
+  function railGroup(side, z0) {
+    var rail = new THREE.Group();
+    rail.position.set(side * (IN_W / 2 - 0.95), 0, z0);
+    salon.add(rail);
+    var bar = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 3.8, 12), brassMat);
+    bar.rotation.x = Math.PI / 2; bar.position.set(0, 3.2, 0);
+    rail.add(bar);
+    [-1.9, 1.9].forEach(function (pz) {
+      var post = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.07, 2.7, 12), brassMat);
+      post.position.set(0, FLOOR_Y + 1.35, pz); rail.add(post);
+    });
+    var tones = [0x2B2B2E, 0xD9CDB6, 0x1C1C1F, 0x8A7C63, 0x5A1F22, 0xCFC3AA, 0x23232A, 0x3B3B42];
+    tones.forEach(function (tone, i) {
+      var z = -1.65 + i * 0.47;
+      var g = new THREE.Group();
+      g.position.set(-side * 0.12, 0, z);
+      var hook = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.012, 6, 12, Math.PI), brassMat);
+      hook.position.set(0, 3.22, 0); hook.rotation.y = Math.PI / 2; g.add(hook);
+      g.add(box(0.1, 0.06, 0.52, mat(0x2A2119, 0.8), 0, 3.1, 0));
+      var body = box(0.22, 1.4, 0.58, mat(tone, 0.86), 0, 2.38, 0);
+      body.castShadow = true; g.add(body);
+      g.add(box(0.2, 0.55, 0.52, mat(tone, 0.86), 0, 1.48, 0));
+      rail.add(g);
+      var wp = new THREE.Vector3();
+      g.getWorldPosition(wp);
+      wp.y = 2.3;
+      registerProduct(g, slotName(i % 3), 0.7, 2.0, 0.55, wp);
+    });
+  }
+  railGroup(-1, INNER_Z0 - 5.6);
+  railGroup(1, INNER_Z0 - 5.6);
+
+  /* ---- counter, mirror, bench, rug ---- */
   var counter = new THREE.Group();
-  counter.position.set(IN_W / 2 - 1.0, 0, FZ - 7.2);
+  counter.position.set(IN_W / 2 - 1.25, 0, INNER_Z0 - 12.8);
   salon.add(counter);
-  counter.add(box(1.6, 1.05, 3.0, mat(0x2A2119, 0.8), 0, 1.02, 0));
-  counter.add(box(1.75, 0.13, 3.15, marbleMat, 0, 1.61, 0));
-  counter.add(box(1.5, 0.05, 2.8, mat(0xD9C79F, 0.5, 0.35), 0, 1.52, 0));
-  var lampBase = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.16, 0.42, 12), brassMat);
-  lampBase.position.set(0, 1.88, 0.9); counter.add(lampBase);
-  var shadeC = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.3, 0.36, 16, 1, true), lit(0xF6E2B8, 0.9));
-  shadeC.position.set(0, 2.24, 0.9); counter.add(shadeC);
-  var lampL = new THREE.PointLight(0xFFD9A0, 1.3, 5, 2);
-  lampL.position.set(0, 2.2, 0.9); counter.add(lampL);
+  counter.add(box(1.8, 1.1, 3.4, mat(0x2A2119, 0.8), 0, FLOOR_Y + 0.55, 0));
+  counter.add(box(1.95, 0.14, 3.55, marbleMat, 0, FLOOR_Y + 1.17, 0));
+  var lampBase = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.17, 0.46, 12), brassMat);
+  lampBase.position.set(0, FLOOR_Y + 1.47, 1.0); counter.add(lampBase);
+  var shadeC = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.32, 0.38, 16, 1, true), lit(0xF6E2B8, 0.9));
+  shadeC.position.set(0, FLOOR_Y + 1.86, 1.0); counter.add(shadeC);
+  var lampL = new THREE.PointLight(0xFFD9A0, 1.4, 6, 2);
+  lampL.position.set(0, FLOOR_Y + 1.82, 1.0); counter.add(lampL);
 
-  /* gilded mirror opposite */
   var mirrorFrame = new THREE.Shape();
-  mirrorFrame.moveTo(-0.95, -1.5); mirrorFrame.lineTo(0.95, -1.5);
-  mirrorFrame.lineTo(0.95, 1.5); mirrorFrame.lineTo(-0.95, 1.5); mirrorFrame.lineTo(-0.95, -1.5);
-  mirrorFrame.holes.push(rectHole(-0.82, -1.37, 0.82, 1.37));
-  var mf = new THREE.Mesh(new THREE.ExtrudeGeometry(mirrorFrame, { depth: 0.09, bevelEnabled: false }),
+  mirrorFrame.moveTo(-1.05, -1.7); mirrorFrame.lineTo(1.05, -1.7);
+  mirrorFrame.lineTo(1.05, 1.7); mirrorFrame.lineTo(-1.05, 1.7); mirrorFrame.lineTo(-1.05, -1.7);
+  mirrorFrame.holes.push(rectHole(-0.9, -1.55, 0.9, 1.55));
+  var mf = new THREE.Mesh(new THREE.ExtrudeGeometry(mirrorFrame, { depth: 0.1, bevelEnabled: false }),
     mat(0xC9A75E, 0.42, 0.65));
   mf.rotation.y = Math.PI / 2;
-  mf.position.set(-IN_W / 2 + 0.12, 3.0, FZ - 7.6);
+  mf.position.set(-IN_W / 2 + 0.14, 3.2, INNER_Z0 - 12.8);
   salon.add(mf);
-  var glassM = new THREE.Mesh(new THREE.PlaneGeometry(1.64, 2.74),
+  var glassM = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 3.1),
     new THREE.MeshStandardMaterial({ color: 0x6B6355, roughness: 0.12, metalness: 0.75 }));
   glassM.rotation.y = Math.PI / 2;
-  glassM.position.set(-IN_W / 2 + 0.1, 3.0, FZ - 7.6);
+  glassM.position.set(-IN_W / 2 + 0.12, 3.2, INNER_Z0 - 12.8);
   salon.add(glassM);
 
-  /* rug + bench */
-  var rug = new THREE.Mesh(new THREE.PlaneGeometry(4.4, 3.0), mat(BURGUNDY, 0.95));
+  var rug = new THREE.Mesh(new THREE.PlaneGeometry(5.6, 3.8), mat(BURGUNDY, 0.95));
   rug.rotation.x = -Math.PI / 2;
-  rug.position.set(0, FLOOR_Y + 0.012, FZ - 4.2);
+  rug.position.set(0, FLOOR_Y + 0.012, INNER_Z0 - 5.2);
   rug.receiveShadow = true;
   salon.add(rug);
-  var rugEdge = new THREE.Mesh(new THREE.RingGeometry(0, 1, 4), mat(0x7A3A2C, 0.95));
-  rugEdge.visible = false;
-  salon.add(rugEdge);
 
   var bench = new THREE.Group();
-  bench.position.set(0, 0, FZ - 1.9);
+  bench.position.set(0, 0, INNER_Z0 - 9.2);
   salon.add(bench);
-  bench.add(box(2.2, 0.28, 0.8, mat(0x4A1D2A, 0.85), 0, 1.0, 0));
-  bench.add(box(2.05, 0.1, 0.68, mat(0x6A2B3A, 0.8), 0, 1.18, 0));
-  [[-0.95, -0.3], [0.95, -0.3], [-0.95, 0.3], [0.95, 0.3]].forEach(function (p) {
-    var l = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.06, 0.86, 10), brassMat);
-    l.position.set(p[0], 0.93, p[1]); bench.add(l);
+  bench.add(box(2.6, 0.3, 0.9, mat(0x4A1D2A, 0.85), 0, FLOOR_Y + 0.63, 0));
+  bench.add(box(2.42, 0.1, 0.76, mat(0x6A2B3A, 0.8), 0, FLOOR_Y + 0.82, 0));
+  [[-1.1, -0.34], [1.1, -0.34], [-1.1, 0.34], [1.1, 0.34]].forEach(function (p) {
+    var l = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.065, 0.98, 10), brassMat);
+    l.position.set(p[0], FLOOR_Y + 0.49, p[1]); bench.add(l);
   });
 
-  /* chandelier */
-  var chand = new THREE.Group();
-  chand.position.set(0, 0, FZ - 4.4);
-  salon.add(chand);
-  var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.1, 8), brassMat);
-  stem.position.y = CEIL_Y - 0.55; chand.add(stem);
-  var ring = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.035, 8, 28), brassMat);
-  ring.rotation.x = Math.PI / 2; ring.position.y = CEIL_Y - 1.15; chand.add(ring);
-  var ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.028, 8, 24), brassMat);
-  ring2.rotation.x = Math.PI / 2; ring2.position.y = CEIL_Y - 1.5; chand.add(ring2);
-  for (var ci = 0; ci < 12; ci++) {
-    var a = (ci / 12) * Math.PI * 2;
-    var b = new THREE.Mesh(new THREE.SphereGeometry(0.055, 8, 6), lit(0xFFE9C0, 2.2));
-    b.position.set(Math.cos(a) * 0.62, CEIL_Y - 1.15, Math.sin(a) * 0.62);
-    chand.add(b);
-    var drop = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.16, 6), lit(0xFFF0D4, 1.2));
-    drop.position.set(Math.cos(a) * 0.62, CEIL_Y - 1.32, Math.sin(a) * 0.62);
-    drop.rotation.x = Math.PI;
-    chand.add(drop);
+  /* ---- chandeliers ---- */
+  function chandelier(z) {
+    var ch = new THREE.Group();
+    ch.position.set(0, 0, z);
+    salon.add(ch);
+    var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.0, 8), brassMat);
+    stem.position.y = CEIL_Y - 0.5; ch.add(stem);
+    var ring = new THREE.Mesh(new THREE.TorusGeometry(0.7, 0.035, 8, 28), brassMat);
+    ring.rotation.x = Math.PI / 2; ring.position.y = CEIL_Y - 1.05; ch.add(ring);
+    var ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.028, 8, 24), brassMat);
+    ring2.rotation.x = Math.PI / 2; ring2.position.y = CEIL_Y - 1.45; ch.add(ring2);
+    for (var ci = 0; ci < 14; ci++) {
+      var a = (ci / 14) * Math.PI * 2;
+      var b = new THREE.Mesh(new THREE.SphereGeometry(0.055, 8, 6), lit(0xFFE9C0, 2.2));
+      b.position.set(Math.cos(a) * 0.7, CEIL_Y - 1.05, Math.sin(a) * 0.7); ch.add(b);
+      var drop = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.17, 6), lit(0xFFF0D4, 1.2));
+      drop.position.set(Math.cos(a) * 0.7, CEIL_Y - 1.24, Math.sin(a) * 0.7);
+      drop.rotation.x = Math.PI; ch.add(drop);
+    }
+    for (var cj = 0; cj < 9; cj++) {
+      var a2 = (cj / 9) * Math.PI * 2 + 0.2;
+      var b2 = new THREE.Mesh(new THREE.SphereGeometry(0.045, 8, 6), lit(0xFFE9C0, 2.0));
+      b2.position.set(Math.cos(a2) * 0.42, CEIL_Y - 1.45, Math.sin(a2) * 0.42); ch.add(b2);
+    }
+    var cl = new THREE.PointLight(0xFFD9A4, 2.3, 14, 2);
+    cl.position.set(0, CEIL_Y - 1.2, z);
+    salon.add(cl);
   }
-  for (var cj = 0; cj < 8; cj++) {
-    var a2 = (cj / 8) * Math.PI * 2 + 0.2;
-    var b2 = new THREE.Mesh(new THREE.SphereGeometry(0.045, 8, 6), lit(0xFFE9C0, 2.0));
-    b2.position.set(Math.cos(a2) * 0.38, CEIL_Y - 1.5, Math.sin(a2) * 0.38);
-    chand.add(b2);
-  }
-  var chandLight = new THREE.PointLight(0xFFD9A4, 2.6, 12, 2);
-  chandLight.position.set(0, CEIL_Y - 1.3, FZ - 4.4);
-  salon.add(chandLight);
+  chandelier(INNER_Z0 - 4.2);
+  chandelier(INNER_Z0 - 11.2);
 
-  /* ceiling cornice + downlights */
-  salon.add(box(IN_W, 0.18, 10.2, mat(0xE6D8BC, 0.88), 0, CEIL_Y - 0.09, MIDZ));
-  [[-2.4, FZ - 2.2], [2.4, FZ - 2.2], [-2.4, FZ - 7.0], [2.4, FZ - 7.0]].forEach(function (p) {
-    var dl = new THREE.PointLight(GLOW, 1.5, 7, 2);
-    dl.position.set(p[0], CEIL_Y - 0.4, p[1]);
-    salon.add(dl);
-    salon.add(new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.04, 12), lit(0xFFE2AE, 1.6))
-      .translateX(p[0]).translateY(CEIL_Y - 0.22).translateZ(p[1]));
+  /* ---- ceiling + downlights ---- */
+  salon.add(box(IN_W, 0.2, ROOM_D - 0.5, mat(0xE6D8BC, 0.88), 0, CEIL_Y - 0.1, ROOM_MZ));
+  [-3.2, 0, 3.2].forEach(function (px) {
+    [2.0, 7.6, 13.2].forEach(function (dz) {
+      var pz = INNER_Z0 - dz;
+      var dl = new THREE.PointLight(GLOW, 0.85, 8, 2);
+      dl.position.set(px, CEIL_Y - 0.45, pz);
+      salon.add(dl);
+      salon.add(new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.04, 12), lit(0xFFE2AE, 1.6))
+        .translateX(px).translateY(CEIL_Y - 0.24).translateZ(pz));
+    });
   });
-  var warmRoom = new THREE.PointLight(0xFFC078, 1.4, 16, 2);
-  warmRoom.position.set(0, 3.4, FZ - 5.5);
+  var warmRoom = new THREE.PointLight(0xFFC078, 1.5, 22, 2);
+  warmRoom.position.set(0, 3.6, INNER_Z0 - 8);
   salon.add(warmRoom);
 
-  /* window displays, seen from the street through the real openings */
+  /* ---- window displays ---- */
   function windowBust(x) {
     var b = new THREE.Group();
-    b.position.set(x, FLOOR_Y, FZ - 1.15);
-    var stand = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.3, 0.72, 16), mat(0x241C13, 0.9));
-    stand.position.y = 0.36; stand.castShadow = true; b.add(stand);
-    var torso = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.19, 0.66, 16), mat(0xE0D0B4, 0.7));
-    torso.position.y = 1.05; torso.castShadow = true; b.add(torso);
-    var head = new THREE.Mesh(new THREE.SphereGeometry(0.19, 20, 16), mat(0xE0D0B4, 0.7));
-    head.position.y = 1.52; b.add(head);
+    b.position.set(x, FLOOR_Y, INNER_Z0 - 1.2);
+    var stand = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.3, 0.78, 16), mat(0x241C13, 0.9));
+    stand.position.y = 0.39; stand.castShadow = true; b.add(stand);
+    var torso = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.2, 0.7, 16), mat(0xE0D0B4, 0.7));
+    torso.position.y = 1.13; torso.castShadow = true; b.add(torso);
+    var head = new THREE.Mesh(new THREE.SphereGeometry(0.2, 20, 16), mat(0xE0D0B4, 0.7));
+    head.position.y = 1.63; b.add(head);
     salon.add(b);
-    cap(b, 0, 1.62, 0, 0x15120C, 'ÁG | Guadalajara');
+    cap(b, 0, 1.74, 0, 0x15120C, 'ÁG | Guadalajara');
   }
   windowBust((WIN_L0 + WIN_L1) / 2);
   windowBust((WIN_R0 + WIN_R1) / 2);
 
   var halo = new THREE.Mesh(
-    new THREE.RingGeometry(2.05, 2.5, 56, 1, Math.PI, Math.PI),
+    new THREE.RingGeometry(2.4, 2.95, 56, 1, Math.PI, Math.PI),
     new THREE.MeshBasicMaterial({ color: BRASS, transparent: true, opacity: 0, side: THREE.DoubleSide }));
   halo.rotation.x = -Math.PI / 2;
-  halo.position.set(0, 0.27, FZ + 0.34);
+  halo.position.set(0, 0.27, FZ + 0.4);
   world.add(halo);
 
   var hit = new THREE.Mesh(
-    new THREE.BoxGeometry(3.7, DOOR_TOP + 1.0, 2.4),
+    new THREE.BoxGeometry(4.4, DOOR_TOP + 1.2, 2.6),
     new THREE.MeshBasicMaterial({ visible: false }));
-  hit.position.set(0, DOOR_TOP / 2 + 0.2, FZ + 0.8);
+  hit.position.set(0, DOOR_TOP / 2 + 0.2, FZ + 0.9);
   world.add(hit);
 
   /* ---------------- neighbours ---------------- */
   function neighbour(x, w, h, tone) {
     var g = new THREE.Group();
     g.position.set(x, 0, 0);
-    var d = 9.0, cz = 2.5 - d / 2;
+    var d = 14.0, cz = 2.5 - d / 2;
     g.add(box(w, h, d, mat(tone, 0.94), 0, h / 2, cz));
     g.add(box(w + 0.4, 0.3, d + 0.2, mat(STONE_D, 0.9), 0, h + 0.1, cz));
     var cols = Math.max(2, Math.round(w / 2.4));
@@ -885,10 +1055,10 @@
     }
     world.add(g);
   }
-  neighbour(-7.75, 6.4, 6.9, 0xA48A62);
-  neighbour(7.75, 6.4, 6.1, 0xAD9268);
-  neighbour(-13.2, 4.4, 5.3, 0x8A7350);
-  neighbour(13.2, 4.4, 5.6, 0x917A55);
+  neighbour(-9.0, 7.4, 7.3, 0xA48A62);
+  neighbour(9.0, 7.4, 6.5, 0xAD9268);
+  neighbour(-15.6, 5.6, 5.7, 0x8A7350);
+  neighbour(15.6, 5.6, 6.0, 0x917A55);
 
   /* ---------------- trees + iron lamps ---------------- */
   function tree(x, z, s) {
@@ -904,12 +1074,12 @@
       });
     world.add(g);
   }
-  tree(-5.6, 4.4, 1.0); tree(5.7, 4.45, 0.92);
-  tree(-11.2, 4.3, 0.82); tree(11.0, 4.35, 0.86);
+  tree(-7.0, 4.6, 1.05); tree(7.1, 4.65, 0.97);
+  tree(-13.6, 4.5, 0.86); tree(13.4, 4.55, 0.9);
 
   function lamp(x) {
     var g = new THREE.Group();
-    g.position.set(x, 0.24, 4.6);
+    g.position.set(x, 0.24, 4.8);
     var base = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.24, 0.4, 10), iron);
     base.position.y = 0.2; g.add(base);
     var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.085, 3.5, 10), iron);
@@ -922,7 +1092,7 @@
     pl.position.y = 3.95; g.add(pl);
     world.add(g);
   }
-  lamp(-8.6); lamp(8.6);
+  lamp(-10.4); lamp(10.4);
 
   /* ---------------- vintage roadster ---------------- */
   (function car(px, pz) {
@@ -962,7 +1132,7 @@
       arch.rotation.y = Math.PI / 2; arch.position.set(w[0], 0.62, w[1] * 1.03); g.add(arch);
     });
     world.add(g);
-  })(-5.0, 7.6);
+  })(-6.6, 7.9);
 
   /* ================= GUADALAJARA BACKDROP ================= */
   var city = new THREE.Group();
@@ -1215,11 +1385,21 @@
 
   /* Portrait phones have a far narrower horizontal field than a desktop
      screen, so a fixed distance crops in hard. Frame by world size instead. */
+  var STREET_FOV = 40;
   function idealRadius() {
     var aspect = innerWidth / innerHeight;
-    var tanV = Math.tan((camera.fov * Math.PI / 180) / 2);
-    return Math.max(17 / (2 * tanV * aspect), 25 / (2 * tanV));
+    var tanV = Math.tan((STREET_FOV * Math.PI / 180) / 2);
+    return Math.max(22 / (2 * tanV * aspect), 28 / (2 * tanV));
   }
+  /* A portrait phone only gets ~19 degrees across at 40 vertical, which is
+     unusable inside a room. Widen the lens indoors, based on the screen. */
+  function fovFor(m) {
+    if (m !== 'inside') return STREET_FOV;
+    var aspect = innerWidth / innerHeight;
+    var v = 2 * Math.atan(Math.tan(26 * Math.PI / 180) / aspect) * 180 / Math.PI;
+    return Math.max(42, Math.min(72, v));
+  }
+  var fovTarget = STREET_FOV;
   var R_IDEAL = idealRadius();
   var R_MIN = Math.max(14, R_IDEAL * 0.42);
   var R_MAX = R_IDEAL * 1.5;
@@ -1232,15 +1412,17 @@
 
   /* inside-the-salon camera: fixed stance, look around */
   var mode = 'street';
-  var IN_POS = new THREE.Vector3(0, 2.45, FZ - 1.1);
-  var IN_LOOK = new THREE.Vector3(0, 2.3, FZ - 7.5);
-  var IN_TH = 0.85, IN_PH_MIN = 1.30, IN_PH_MAX = 1.86;
+  var IN_POS = new THREE.Vector3(0, 2.55, FZ - 1.6);
+  var IN_LOOK = new THREE.Vector3(0, 2.4, FZ - 12);
+  var IN_TH = 1.05, IN_PH_MIN = 1.24, IN_PH_MAX = 1.92;
+  var IN_Z_NEAR = FZ - 1.2, IN_Z_FAR = FZ - 12.0, advance = 0.12;
   var startPos = new THREE.Vector3(), startLook = new THREE.Vector3();
-  var doorGate = new THREE.Vector3(0, 1.95, FZ + 0.1);
+  var doorGate = new THREE.Vector3(0, 2.1, FZ + 0.1);
   var reverse = false;
 
   function place() {
     if (mode === 'inside') {
+      IN_POS.z = IN_Z_NEAR + (IN_Z_FAR - IN_Z_NEAR) * advance;
       camera.position.copy(IN_POS);
       camera.lookAt(
         IN_POS.x + Math.sin(sph.phi) * Math.sin(sph.theta) * 10,
@@ -1332,6 +1514,7 @@
   });
   el.addEventListener('wheel', function (e) {
     e.preventDefault();
+    if (mode === 'inside') { advance = Math.min(1, Math.max(0, advance + e.deltaY * 0.0011)); return; }
     goal.r = Math.min(R_MAX, Math.max(R_MIN, goal.r + e.deltaY * 0.022));
     userZoomed = true; autoSpin = false; idle = 0;
   }, { passive: false });
@@ -1345,6 +1528,7 @@
     if (e.touches.length === 2 && pinch) {
       var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
                          e.touches[0].clientY - e.touches[1].clientY);
+      if (mode === 'inside') { advance = Math.min(1, Math.max(0, advance - (d - pinch) * 0.004)); pinch = d; return; }
       goal.r = Math.min(R_MAX, Math.max(R_MIN, goal.r - (d - pinch) * 0.06));
       pinch = d; userZoomed = true; autoSpin = false; idle = 0;
     }
@@ -1452,6 +1636,7 @@
         if (reverse) {
           mode = 'street';
           reverse = false;
+          fovTarget = STREET_FOV;
           sph.theta = goal.theta = -0.13; sph.phi = goal.phi = 1.60;
           sph.r = goal.r = R_IDEAL; tgt.set(0, 4.7, 0);
           autoSpin = true; idle = 0; sway = 0;
@@ -1461,6 +1646,8 @@
           document.getElementById('hint').classList.add('in');
         } else {
           mode = 'inside';
+          advance = 0.12;
+          fovTarget = fovFor('inside');
           sph.theta = goal.theta = 0; sph.phi = goal.phi = 1.57;
           if (backEl) backEl.classList.add('shown');
           var hn = document.getElementById('hint');
@@ -1473,6 +1660,10 @@
       return;
     }
     if (mode === 'inside') {
+      if (Math.abs(camera.fov - fovTarget) > 0.04) {
+        camera.fov += (fovTarget - camera.fov) * 0.09;
+        camera.updateProjectionMatrix();
+      }
       sph.theta += (goal.theta - sph.theta) * 0.09;
       sph.phi += (goal.phi - sph.phi) * 0.09;
       place();
@@ -1499,6 +1690,10 @@
       }
     }
 
+    if (Math.abs(camera.fov - fovTarget) > 0.04) {
+      camera.fov += (fovTarget - camera.fov) * 0.09;
+      camera.updateProjectionMatrix();
+    }
     sph.r += (goal.r - sph.r) * 0.06;
     sph.theta += (goal.theta - sph.theta) * 0.08;
     sph.phi += (goal.phi - sph.phi) * 0.08;
@@ -1547,6 +1742,7 @@
     R_IDEAL = idealRadius();
     R_MIN = Math.max(14, R_IDEAL * 0.42);
     R_MAX = R_IDEAL * 1.5;
+    fovTarget = fovFor(mode);
     if (entering) return;
     if (userZoomed) goal.r = Math.min(R_MAX, Math.max(R_MIN, goal.r));
     else goal.r = R_IDEAL;
