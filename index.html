@@ -163,7 +163,7 @@
 
   var scene = new THREE.Scene();
   scene.background = new THREE.Color(NIGHT);
-  scene.fog = new THREE.FogExp2(0x0C0E15, 0.0128);
+  scene.fog = new THREE.FogExp2(0x0C0E15, 0.0108);
 
   var camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 300);
 
@@ -823,7 +823,19 @@
 
   /* ---------------- camera ---------------- */
   var TH_MIN = -0.44, TH_MAX = 0.44, PH_MIN = 1.18, PH_MAX = 1.66;
-  var R_MIN = 18, R_MAX = 52, R_START = 34;
+
+  /* Portrait phones have a far narrower horizontal field than a desktop
+     screen, so a fixed distance crops in hard. Frame by world size instead. */
+  function idealRadius() {
+    var aspect = innerWidth / innerHeight;
+    var tanV = Math.tan((camera.fov * Math.PI / 180) / 2);
+    return Math.max(17 / (2 * tanV * aspect), 25 / (2 * tanV));
+  }
+  var R_IDEAL = idealRadius();
+  var R_MIN = Math.max(14, R_IDEAL * 0.42);
+  var R_MAX = R_IDEAL * 1.5;
+  var R_START = R_IDEAL;
+  var userZoomed = false, enterFrom = R_START;
   var tgt = new THREE.Vector3(0, 4.7, 0);
   var sph = { r: R_START, theta: -0.13, phi: 1.60 };
   var goal = { r: R_START, theta: -0.13, phi: 1.60 };
@@ -906,7 +918,7 @@
   el.addEventListener('wheel', function (e) {
     e.preventDefault();
     goal.r = Math.min(R_MAX, Math.max(R_MIN, goal.r + e.deltaY * 0.022));
-    autoSpin = false; idle = 0;
+    userZoomed = true; autoSpin = false; idle = 0;
   }, { passive: false });
   el.addEventListener('touchstart', function (e) {
     if (e.touches.length === 2) {
@@ -919,7 +931,7 @@
       var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
                          e.touches[0].clientY - e.touches[1].clientY);
       goal.r = Math.min(R_MAX, Math.max(R_MIN, goal.r - (d - pinch) * 0.06));
-      pinch = d; autoSpin = false; idle = 0;
+      pinch = d; userZoomed = true; autoSpin = false; idle = 0;
     }
   }, { passive: true });
   el.addEventListener('touchend', function () { pinch = 0; });
@@ -928,6 +940,7 @@
   function enterStore() {
     if (entering) return;
     entering = true;
+    enterFrom = sph.r;
     autoSpin = false;
     document.getElementById('mark').classList.remove('in');
     document.getElementById('hint').classList.remove('in');
@@ -945,7 +958,7 @@
     if (entering) {
       walkIn = Math.min(1, walkIn + dt * 0.4);
       var e2 = walkIn * walkIn * (3 - 2 * walkIn);
-      goal.r = R_START + (7.0 - R_START) * e2;
+      goal.r = enterFrom + (7.0 - enterFrom) * e2;
       goal.theta *= (1 - e2 * 0.16);
       goal.phi += (1.62 - goal.phi) * 0.022;
       tgt.y = 4.7 + (2.3 - 4.7) * e2;
@@ -994,6 +1007,12 @@
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
+    R_IDEAL = idealRadius();
+    R_MIN = Math.max(14, R_IDEAL * 0.42);
+    R_MAX = R_IDEAL * 1.5;
+    if (entering) return;
+    if (userZoomed) goal.r = Math.min(R_MAX, Math.max(R_MIN, goal.r));
+    else goal.r = R_IDEAL;
   });
 
   setTimeout(function () {
